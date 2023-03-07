@@ -8,7 +8,12 @@
 '''
 
 # Welcome Message
-
+print("Monthly Budget Program")
+print("----------------------\n")
+print("Actions:")
+print("1. Make a new budget (new)")
+print("2. Edit an existing budget (edit)")
+print("3. Quit the program (quit)")
 # Ask users what they want to do
 
 # If user wants to make a new file
