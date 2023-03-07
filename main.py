@@ -6,6 +6,8 @@
   
   TIP: Use assessment guide to help guide you through this Internal
 '''
+import json
+
 
 # Welcome Message
 print("Monthly Budget Program")
@@ -19,11 +21,12 @@ while True:
   user_action = input("\nPlease select an action: ")
 # If user wants to make a new file
   if user_action == "new":
-    print("picked new") # testing purposes
-  # Ask user for name of file
-
-  # Create file
-
+    # Ask user for name of file
+    file_name = input("\nWhat would you like the file name to be? ")
+    # Create file
+    with open(file_name, "w") as f:
+      test_dict = {"hello": "world"} # testing purposes
+      json.dump(test_dict, f)
   # Ask user for income before tax
 
   # Calculate discretionary income
