@@ -47,12 +47,13 @@ while True:
 
 # If user types quit
   elif user_action == "quit":
-    print("picked quit") # testing purposes
   # Goodbye message
-
-  # Quit program
+    print("Goodbye! Thanks for using the program.")
+    break
 
 # Else user did not input a correct action
   else:
   # Prints please try again
     print("Please try again")
+
+quit()
