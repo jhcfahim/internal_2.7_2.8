@@ -45,9 +45,14 @@ while True:
       test_dict = {"hello": "world"}  # testing purposes
       json.dump(test_dict, f)
   # Ask user for income before tax
-      income_before_tax = int(input("Enter your income before tax $: "))
-    # Calculate disposable income
-      disposable_income(income_before_tax)
+      while True: # testing purposes
+        income_before_tax = input("Enter your income before tax $: ")
+        # Calculate disposable income
+        if income_before_tax.isdigit() or income_before_tax.isfloat():
+          income_before_tax = float(income_before_tax)
+          disposable_income(income_before_tax)
+        else:
+          print("Please enter a number for income.")
   # While disposable income is greater than zero loop
 
   # Ask users to add categories and budget
