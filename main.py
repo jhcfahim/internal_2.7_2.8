@@ -14,13 +14,13 @@ def disposable_income(income):
       if income_before_tax <= 14000:
         tax = 0.105 * income_before_tax
       elif income_before_tax <= 48000:
-        tax = 0.175 * (income_before_tax - 14, 000) + 1, 470
+        tax = 0.175 * (income_before_tax - 14000) + 1470
       elif income_before_tax <= 70000:
-        tax = 0.3 * (income_before_tax - 48, 000) + 7, 950
+        tax = 0.3 * (income_before_tax - 48000) + 7950
       elif income_before_tax <= 180000:
-        tax = 0.33 * (income_before_tax - 70, 000) + 14, 850
+        tax = 0.33 * (income_before_tax - 70000) + 14850
       else:
-        tax = 0.39 * (income_before_tax - 180, 000) + 48, 540
+        tax = 0.39 * (income_before_tax - 180000) + 48540
   
       disposable_income = income_before_tax - tax
 
@@ -45,14 +45,16 @@ while True:
       test_dict = {"hello": "world"}  # testing purposes
       json.dump(test_dict, f)
   # Ask user for income before tax
-      while True: # testing purposes
-        income_before_tax = input("Enter your income before tax $: ")
-        # Calculate disposable income
-        if income_before_tax.isdigit() or income_before_tax.isfloat():
-          income_before_tax = float(income_before_tax)
-          disposable_income(income_before_tax)
-        else:
-          print("Please enter a number for income.")
+    while True: # testing purposes
+      income_before_tax = input("Enter your income before tax $: ")
+      # Calculate disposable income
+      if income_before_tax.isdigit() or (('.' in income_before_tax) and income_before_tax.replace('.', '', 1).isdigit()):
+        income_before_tax = float(income_before_tax)
+          # Call disposable_income function with income_before_tax as argument
+        disposable_income(income_before_tax)
+      else:
+          print("Please enter a valid number for income.")
+
   # While disposable income is greater than zero loop
 
   # Ask users to add categories and budget
