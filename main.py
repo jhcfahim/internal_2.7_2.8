@@ -53,14 +53,20 @@ while True:
         income_before_tax = float(income_before_tax)
         # Call disposable_income function with income_before_tax as argument
         income_after_tax = disposable_income(income_before_tax)
-        # While disposable income is greater than zero loop
+        # While disposable income is greater than zero loop+
+        categories = {}
         while income_after_tax > 0:
-          print("test")
           # Ask users to add categories and budget
-        
+          category = input("Add a category: ")
+          if category == "stop":
+            break
+          else:
+            budget = int(input("Add a budget: "))
+            categories[category] = budget
           # Remove budget from discretionary income
         
           # Store categories in file
+        json.dump(categories, f)
       else:
           print("Please enter a valid number for income.")
 
