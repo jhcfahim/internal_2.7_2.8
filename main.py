@@ -22,9 +22,10 @@ def disposable_income(income):
       else:
         tax = 0.39 * (income_before_tax - 180000) + 48540
   
-      disposable_income = income_before_tax - tax
+      income_after_tax = income_before_tax - tax
 
-      print(f"Your income after tax is: {disposable_income}")
+      print(f"Your income after tax is: {income_after_tax}")
+      return income_after_tax
   
 # Welcome Message
 
@@ -50,18 +51,19 @@ while True:
       # Calculate disposable income
       if income_before_tax.isdigit() or (('.' in income_before_tax) and income_before_tax.replace('.', '', 1).isdigit()):
         income_before_tax = float(income_before_tax)
-          # Call disposable_income function with income_before_tax as argument
-        disposable_income(income_before_tax)
+        # Call disposable_income function with income_before_tax as argument
+        income_after_tax = disposable_income(income_before_tax)
+        # While disposable income is greater than zero loop
+        while income_after_tax > 0:
+          print("test")
+          # Ask users to add categories and budget
+        
+          # Remove budget from discretionary income
+        
+          # Store categories in file
       else:
           print("Please enter a valid number for income.")
 
-  # While disposable income is greater than zero loop
-
-  # Ask users to add categories and budget
-
-  # Remove budget from discretionary income
-
-  # Store categories in file
 
 # Elif user wants to access a previous file
   elif user_action == "edit":
