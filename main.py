@@ -27,12 +27,15 @@ def disposable_income(income):
       print(f"Your income after tax is: {disposable_income}")
   
 # Welcome Message
-print("Monthly Budget Program")
-print("----------------------\n")
-print("Actions:")
-print("1. Make a new budget (new)")
-print("2. Edit an existing budget (edit)")
-print("3. Quit the program (quit)")
+
+print("""
+Monthly Budget Program
+----------------------\n
+Actions:
+1. Make a new budget (new)
+2. Edit an existing budget (edit)
+3. Quit the program (quit)
+""")
 # Ask users what they want to do
 while True:
   user_action = input("\nPlease select an action: ").lower()
@@ -42,10 +45,7 @@ while True:
     file_name = input("\nWhat would you like the file name to be? ")
     # Create file
     with open(file_name, "w") as f:
-      test_dict = {"hello": "world"}  # testing purposes
-      json.dump(test_dict, f)
   # Ask user for income before tax
-    while True: # testing purposes
       income_before_tax = input("Enter your income before tax $: ")
       # Calculate disposable income
       if income_before_tax.isdigit() or (('.' in income_before_tax) and income_before_tax.replace('.', '', 1).isdigit()):
