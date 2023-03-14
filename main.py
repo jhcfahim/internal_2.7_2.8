@@ -74,7 +74,8 @@ while True:
                     income_after_tax -= budget
         
             # Store categories in file
-            json.dump(categories, f)
+            title = "Monthly Budget"
+            json.dump({title:categories}, f, indent=4)
             
     # Elif user wants to access a previous file
     elif user_action == "edit":
