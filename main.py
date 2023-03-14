@@ -47,6 +47,7 @@ while True:
         # Create file
         with open(file_name, "w") as f:
             f.write("Monthly Budget\n")
+            f.write("--------------\n")
             # Ask user for income before tax
             while True:
                 income_before_tax = input("Enter your income before tax $: ")
@@ -74,7 +75,7 @@ while True:
                     income_after_tax -= budget
         
             for category, budget in categories.items():
-              f.write(f"{category}: {budget}\n")
+              f.write(f"{category}: {budget}\n\n")
             
     # Elif user wants to access a previous file
     elif user_action == "edit":
