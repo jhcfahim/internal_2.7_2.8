@@ -46,7 +46,7 @@ while True:
         
         # Create file
         with open(file_name, "w") as f:
-            
+            f.write("Monthly Budget\n")
             # Ask user for income before tax
             while True:
                 income_before_tax = input("Enter your income before tax $: ")
@@ -73,9 +73,8 @@ while True:
                     # Remove budget from discretionary income
                     income_after_tax -= budget
         
-            # Store categories in file
-            title = "Monthly Budget"
-            json.dump({title:categories}, f, indent=4)
+            for category, budget in categories.items():
+              f.write(f"{category}: {budget}\n")
             
     # Elif user wants to access a previous file
     elif user_action == "edit":
