@@ -3,7 +3,7 @@ JHC Internal
 Fahim Firdaus
 2.7 and 2.8 - 12 credits
 """
-
+import os
 
 #Functions
 def disposable_income(income):
@@ -18,7 +18,7 @@ def disposable_income(income):
   else:
     tax = 0.39 * (income_before_tax - 180000) + 48540
 
-  income_after_tax = income_before_tax - tax
+  income_after_tax = round(income_before_tax - tax, 2)
 
   print(f"Your income after tax is: {income_after_tax}")
   return income_after_tax
@@ -86,22 +86,41 @@ while True:
           break
         else:
           budget = check_num("Add a budget: ")
-          categories[category] = budget
-
+          if budget > income_after_tax:
+            print("Your budget is bigger than available income. Please enter a smaller budget.")
+          else:
+            categories[category] = budget
           # Remove budget from discretionary income
-          income_after_tax -= budget
+            income_after_tax -= budget
+            if income_after_tax == 0:
+              print("You have used all your budget.")
+              break
 
+      
       for category, budget in categories.items():
         f.write(f"{category}: {budget}\n\n")
 
   # Elif user wants to access a previous file
   elif user_action == "edit":
-    print("picked edit")  # testing purposes
-
     # Ask user for what file they want to change
-
-    # Change category or budget
-
+    file_edit = input("What file do you want to edit? ")
+    if not os.path.isfile(file_edit):
+      print("There is no file with that name.")
+      continue
+    # Open file for editing
+    with open(file_edit, "r+") as f:
+      # Print current contents of file
+      contents = f.read()
+      print(contents)
+      # Ask user which category they want to edit
+      category_to_edit = input("Which category do you want to edit? ")
+      # Find line number of category to edit
+      f.seek(0)
+      lines = f.readlines()
+      for i, line in enumerate(lines):
+          if line.startswith(category_to_edit):
+              category_line_number = i
+              break
   # Quit the program
   elif user_action == "quit":
     # Goodbye message
@@ -112,3 +131,5 @@ while True:
   else:
     # Prints please try again
     print("Please try again")
+
+
