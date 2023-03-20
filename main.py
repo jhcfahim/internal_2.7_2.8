@@ -47,9 +47,9 @@ print("""
 Monthly Budget Program
 ----------------------\n
 Actions:
-1. Make a new budget (new)
-2. Edit an existing budget (edit)
-3. Quit the program (quit)
+Make a new budget (new)
+Edit an existing budget (edit)
+Quit the program (quit)
 """)
 
 # Ask users what they want to do
@@ -85,7 +85,7 @@ while True:
         if category == "stop":
           break
         else:
-          budget = check_num("Add a budget: ")
+          budget = check_num("Add a budget (enter a number) $: ")
           if budget > income_after_tax:
             print("Your budget is bigger than available income. Please enter a smaller budget.")
           else:
@@ -127,8 +127,12 @@ while True:
                 break
         if not category_exists:
           print("Category does not exist in the budget.")
-      
-      action = input("Do you want to change the name or value of the category? ").lower()
+
+      action = ""
+      while action not in ["value", "name"]: 
+        action = input("Do you want to change the name or value of the category? ").lower()
+        if action not in ["value", "name"]:
+          print("Invalid action. Please enter 'value' or 'name'.")
 
       if action == "value":
         new_value = input("What is the new value for the category? ")
