@@ -117,10 +117,34 @@ while True:
       # Find line number of category to edit
       f.seek(0)
       lines = f.readlines()
+      category_exists = False
       for i, line in enumerate(lines):
           if line.startswith(category_to_edit):
+              category_exists = True
               category_line_number = i
+              category_name, category_value = line.strip().split(":")
               break
+      if not category_exists:
+        print("Category does not exist in the budget.")
+      
+      action = input("Do you want to change the name or value of the category? ").lower()
+
+      if action == "value":
+        new_value = input("What is the new value for the category? ")
+        category_value = new_value
+
+      elif action == "name":
+        new_name = input("What is the new name for the category? ")
+        category_name = new_name
+
+      new_line = category_name + ":" + category_value + "\n"
+      lines[category_line_number] = new_line
+
+      f.seek(0)
+      f.writelines(lines)
+      f.truncate()
+      print("Category updated successfully.")
+  
   # Quit the program
   elif user_action == "quit":
     # Goodbye message
