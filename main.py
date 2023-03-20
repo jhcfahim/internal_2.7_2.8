@@ -113,19 +113,20 @@ while True:
       contents = f.read()
       print(contents)
       # Ask user which category they want to edit
-      category_to_edit = input("Which category do you want to edit? ")
-      # Find line number of category to edit
-      f.seek(0)
-      lines = f.readlines()
       category_exists = False
-      for i, line in enumerate(lines):
-          if line.startswith(category_to_edit):
-              category_exists = True
-              category_line_number = i
-              category_name, category_value = line.strip().split(":")
-              break
-      if not category_exists:
-        print("Category does not exist in the budget.")
+      while not category_exists:
+        category_to_edit = input("Which category do you want to edit? ")
+        # Find line number of category to edit
+        f.seek(0)
+        lines = f.readlines()
+        for i, line in enumerate(lines):
+            if line.startswith(category_to_edit):
+                category_exists = True
+                category_line_number = i
+                category_name, category_value = line.strip().split(":")
+                break
+        if not category_exists:
+          print("Category does not exist in the budget.")
       
       action = input("Do you want to change the name or value of the category? ").lower()
 
