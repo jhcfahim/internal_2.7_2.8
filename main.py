@@ -41,7 +41,10 @@ def check_num(question):
       print("Please enter a valid number for budget")
 
 
+def file_exists(file_name):
+  return os.path.isfile(file_name)
 
+  
 # Welcome Message
 print("""
 Monthly Budget Program
@@ -59,8 +62,12 @@ while True:
   # If user wants to make a new file
   if user_action == "new":
     # Ask user for name of file
-    file_name = input("\nWhat would you like the file name to be? ")
-
+    while True:
+      file_name = input("\nWhat would you like the file name to be? ")
+      if not file_exists(file_name):
+        break
+      else:
+        print("A file already exists with that name. Please choose a different name.")
     # Create file
     with open(file_name, "w") as f:
       f.write("Monthly Budget\n")
@@ -79,11 +86,21 @@ while True:
 
       # While disposable income is greater than zero loop+
       categories = {}
+      print("Start adding your categories and budgets below, when you want to stop, type 'quit' into the category section if you need help, type 'help' into the category section")
       while income_after_tax > 0:
         # Ask users to add categories and budget
-        category = input("Add a category: ")
+        category = input("\nAdd a category: ")
         if category == "stop":
           break
+        elif category == "help":
+          print("""\nIf you need help with choosing a category, consider listing out your regular monthly expenses such as rent/mortgage, utilities, groceries, transportation, and any other bills. 
+You can also add categories for savings, entertainment, and personal expenses. 
+Once you have a list of categories, enter them one by one when prompted. 
+For the budget section, enter the amount of money you want to put aside for the specific category, make sure you don't go over your income!
+\nFor example:
+Category: food
+Budget: 200
+          """)
         else:
           budget = check_num("Add a budget (enter a number) $: ")
           if budget > income_after_tax:
