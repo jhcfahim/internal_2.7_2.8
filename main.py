@@ -45,6 +45,39 @@ def file_exists(file_name):
   return os.path.isfile(file_name)
 
   
+def add_categories(income_after_tax):
+  categories = {}
+  print("\nStart adding your categories and budgets below, when you want to stop, type 'quit' into the category section if you need help, type 'help' into the category section")
+  while income_after_tax > 0:
+    # Ask users to add categories and budget
+    category = input("\nAdd a category: ")
+    if category == "stop":
+      break
+    elif category == "help":
+      print("""\nIf you need help with choosing a category, consider listing out your regular monthly expenses such as rent/mortgage, utilities, groceries, transportation, and any other bills. 
+You can also add categories for savings, entertainment, and personal expenses. 
+Once you have a list of categories, enter them one by one when prompted. 
+For the budget section, enter the amount of money you want to put aside for the specific category, make sure you don't go over your income!
+\nFor example:
+Category: food
+Budget: 200
+          """)
+    else:
+      budget = check_num("Add a budget (enter a number) $: ")
+      if budget > income_after_tax:
+        print("Your budget is bigger than available income. Please enter a smaller budget.")
+      else:
+        categories[category] = budget
+        # Remove budget from discretionary income
+        income_after_tax -= budget
+        if income_after_tax == 0:
+            print("You have used all your budget.")
+            break
+
+      
+  for category, budget in categories.items():
+    f.write(f"{category}: {budget}\n\n")
+  
 # Welcome Message
 print("""
 Monthly Budget Program
@@ -74,7 +107,7 @@ while True:
       f.write("--------------\n")
       # Ask user for income before tax
       while True:
-        income_before_tax = input("Enter your income before tax $: ")
+        income_before_tax = input("\nEnter your income before tax $: ")
         if is_valid_number(income_before_tax):
           income_before_tax = float(income_before_tax)
           break
@@ -85,42 +118,13 @@ while True:
       income_after_tax = disposable_income(income_before_tax)
 
       # While disposable income is greater than zero loop+
-      categories = {}
-      print("Start adding your categories and budgets below, when you want to stop, type 'quit' into the category section if you need help, type 'help' into the category section")
-      while income_after_tax > 0:
-        # Ask users to add categories and budget
-        category = input("\nAdd a category: ")
-        if category == "stop":
-          break
-        elif category == "help":
-          print("""\nIf you need help with choosing a category, consider listing out your regular monthly expenses such as rent/mortgage, utilities, groceries, transportation, and any other bills. 
-You can also add categories for savings, entertainment, and personal expenses. 
-Once you have a list of categories, enter them one by one when prompted. 
-For the budget section, enter the amount of money you want to put aside for the specific category, make sure you don't go over your income!
-\nFor example:
-Category: food
-Budget: 200
-          """)
-        else:
-          budget = check_num("Add a budget (enter a number) $: ")
-          if budget > income_after_tax:
-            print("Your budget is bigger than available income. Please enter a smaller budget.")
-          else:
-            categories[category] = budget
-          # Remove budget from discretionary income
-            income_after_tax -= budget
-            if income_after_tax == 0:
-              print("You have used all your budget.")
-              break
+      add_categories(income_after_tax)
 
-      
-      for category, budget in categories.items():
-        f.write(f"{category}: {budget}\n\n")
 
   # Elif user wants to access a previous file
   elif user_action == "edit":
     # Ask user for what file they want to change
-    file_edit = input("What file do you want to edit? ")
+    file_edit = input("\nWhat file do you want to edit? ")
     if not os.path.isfile(file_edit):
       print("There is no file with that name.")
       continue
@@ -165,7 +169,7 @@ Budget: 200
       f.seek(0)
       f.writelines(lines)
       f.truncate()
-      print("Category updated successfully.")
+      print("\nCategory updated successfully.")
   
   # Quit the program
   elif user_action == "quit":
