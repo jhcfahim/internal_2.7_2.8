@@ -6,7 +6,7 @@ Fahim Firdaus
 import os
 
 #Functions
-def disposable_income(income):
+def disposable_income(income_before_tax):
   if income_before_tax <= 14000:
     tax = 0.105 * income_before_tax
   elif income_before_tax <= 48000:
@@ -44,8 +44,29 @@ def check_num(question):
 def file_exists(file_name):
   return os.path.isfile(file_name)
 
+
+def create_budget_file():
+    while True:
+        file_name = input("\nWhat would you like the file name to be? ")
+        if not file_exists(file_name):
+            break
+        else:
+            print("A file already exists with that name. Please choose a different name.")
+    with open(file_name, "w") as f:
+        f.write("Monthly Budget\n")
+        f.write("--------------\n")
+        while True:
+            income_before_tax = input("\nEnter your income before tax $: ")
+            if is_valid_number(income_before_tax):
+                income_before_tax = float(income_before_tax)
+                break
+            else:
+                print("Please enter a valid number for income.")
+        income_after_tax = disposable_income(income_before_tax)
+        add_categories(income_after_tax, f)
+
   
-def add_categories(income_after_tax):
+def add_categories(income_after_tax, f):
   categories = {}
   print("\nStart adding your categories and budgets below, when you want to stop, type 'quit' into the category section if you need help, type 'help' into the category section")
   while income_after_tax > 0:
@@ -91,37 +112,8 @@ Quit the program (quit)
 # Ask users what they want to do
 while True:
   user_action = input("\nPlease select an action: ").lower()
-
-  # If user wants to make a new file
   if user_action == "new":
-    # Ask user for name of file
-    while True:
-      file_name = input("\nWhat would you like the file name to be? ")
-      if not file_exists(file_name):
-        break
-      else:
-        print("A file already exists with that name. Please choose a different name.")
-    # Create file
-    with open(file_name, "w") as f:
-      f.write("Monthly Budget\n")
-      f.write("--------------\n")
-      # Ask user for income before tax
-      while True:
-        income_before_tax = input("\nEnter your income before tax $: ")
-        if is_valid_number(income_before_tax):
-          income_before_tax = float(income_before_tax)
-          break
-        else:
-          print("Please enter a valid number for income.")
-
-      # Call disposable_income function with income_before_tax as argument
-      income_after_tax = disposable_income(income_before_tax)
-
-      # While disposable income is greater than zero loop+
-      add_categories(income_after_tax)
-
-
-  # Elif user wants to access a previous file
+      create_budget_file()
   elif user_action == "edit":
     # Ask user for what file they want to change
     file_edit = input("\nWhat file do you want to edit? ")
