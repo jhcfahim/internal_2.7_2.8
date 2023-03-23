@@ -15,13 +15,13 @@ def disposable_income(income_before_tax):
   if income_before_tax <= 14000:
     tax = 0.105 * income_before_tax
   elif income_before_tax <= 48000:
-    tax = 0.175 * (income_before_tax - 14000) + 1470
+    tax = 0.175 * (income_before_tax - 14000) + 945
   elif income_before_tax <= 70000:
-    tax = 0.3 * (income_before_tax - 48000) + 7950
+    tax = 0.3 * (income_before_tax - 48000) + 7135
   elif income_before_tax <= 180000:
-    tax = 0.33 * (income_before_tax - 70000) + 14850
+    tax = 0.33 * (income_before_tax - 70000) + 15755
   else:
-    tax = 0.39 * (income_before_tax - 180000) + 48540
+    tax = 0.39 * (income_before_tax - 180000) + 51795
 
   # Calculates disposable income (income after tax) and rounds to 2dp
   income_after_tax = round(income_before_tax - tax, 2)
