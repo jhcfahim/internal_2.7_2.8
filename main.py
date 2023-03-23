@@ -12,6 +12,7 @@ def disposable_income(income_before_tax):
   """Calculates disposable income and prints it out to the user."""
 
   # Calculate the tax based on income before tax
+  # Tax rates from: https://www.ird.govt.nz/income-tax/income-tax-for-individuals/tax-codes-and-tax-rates-for-individuals/tax-rates-for-individuals
   if income_before_tax <= 14000:
     tax = 0.105 * income_before_tax
   elif income_before_tax <= 48000:
