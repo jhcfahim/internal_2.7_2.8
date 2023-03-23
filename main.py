@@ -55,7 +55,7 @@ def check_num(question):
     if is_valid_number(user_input):
       return float(user_input)
     else:
-      print("Please enter a valid number for budget")
+      print("\033[31mPlease enter a valid number for budget\033[0m")
 
 
 def file_exists(file_name):
@@ -74,7 +74,7 @@ def create_budget_file():
         if not file_exists(file_name):
             break
         else:
-            print("A file already exists with that name. Please choose a different name.")
+            print("\033[31mA file already exists with that name. Please choose a different name.\033[0m")
 
     # Create a new file with the given name
     with open(file_name, "w") as f:
@@ -90,7 +90,7 @@ def create_budget_file():
                 income_before_tax = float(income_before_tax)
                 break
             else:
-                print("Please enter a valid number for income.")
+                print("\033[31mPlease enter a valid number for income.\033[0m")
 
         # Calculate the disposable income (income after tax)
         income_after_tax = disposable_income(income_before_tax)
@@ -134,7 +134,7 @@ Budget: 200
 
       # Check if the budget is more than discretionary income
       if budget > income_after_tax:
-        print("Your budget is bigger than available income. Please enter a smaller budget.")
+        print("\033[31mYour budget is bigger than available income. Please enter a smaller budget.\033[0m")
 
       # Add category and budget to the dictionary, subtract budget from discreionary income 
       else:
@@ -177,14 +177,14 @@ def edit_budget_category():
                     category_name, category_value = line.strip().split(":")
                     break
             if not category_exists:
-                print("Category does not exist in the budget.")
+                print("\033[31mCategory does not exist in the budget.\033[0m")
 
         # Ask user whether they want to change the category name or value.
         action = ""
         while action not in ["value", "name"]: 
             action = input("Do you want to change the name or value of the category? ").lower()
             if action not in ["value", "name"]:
-                print("Invalid action. Please enter 'value' or 'name'.")
+                print("\033[31mInvalid action. Please enter 'value' or 'name'.\033[0m")
         # If user wants to change the value, prompt for new value and update.
         if action == "value":
             new_value = input("What is the new value for the category? ")
@@ -206,8 +206,8 @@ def edit_budget_category():
 
       
 # Welcome Message
+print("\033[34mMonthly Budget Program\033[0m")
 print("""
-Monthly Budget Program
 ----------------------\n
 Actions:
 Make a new budget (new)
@@ -218,8 +218,10 @@ Quit the program (quit)
 # Ask users what they want to do
 while True:
   user_action = input("\nPlease select an action: ").lower()
+  # Make a new budget
   if user_action == "new":
     create_budget_file()
+  # Edit an already existing budget
   elif user_action == "edit":
     edit_budget_category()
   # Quit the program
@@ -229,6 +231,5 @@ while True:
     break
   # Else user did not input a correct action
   else:
-    # Prints please try again
-    print("Please try again")
+    print("\033[31mPlease try again\033[0m")
     
