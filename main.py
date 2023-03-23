@@ -68,7 +68,7 @@ def create_budget_file():
 
     # Loop to get a unique file name
     while True:
-        file_name = input("\nWhat would you like the file name to be? ")
+        file_name = input("\n\033[32What would you like the file name to be? \033[0m")
 
         # Check if a file with that name already exists
         if not file_exists(file_name):
@@ -83,7 +83,7 @@ def create_budget_file():
 
         # Loop to get the user's income before tax
         while True:
-            income_before_tax = input("\nEnter your income before tax $: ")
+            income_before_tax = input("\n\033[32mEnter your income before tax $: \033[0m")
 
             # Check if the input is a valid number
             if is_valid_number(income_before_tax):
@@ -112,7 +112,7 @@ def add_categories(income_after_tax, f):
   while income_after_tax > 0:
    
     # Ask users to add categories and budget
-    category = input("\nAdd a category: ")
+    category = input("\n\033[32mAdd a category: \033[0m")
     
     # Check if user wants to stop adding categories or needs help.
     if category == "stop":
@@ -153,10 +153,10 @@ Budget: 200
 def edit_budget_category():
     """Allow users to edit already existing budgets"""
     # Ask user for what file they want to change
-    file_edit = input("\nWhat file do you want to edit? ")
+    file_edit = input("\n\033[32mWhat file do you want to edit? \033[0m")
     # Check if the file exists
     if not os.path.isfile(file_edit):
-        print("There is no file with that name.")
+        print("\033[31mThere is no file with that name.\033[0m")
         return
     # Open the file for editing
     with open(file_edit, "r+") as f:
@@ -166,7 +166,7 @@ def edit_budget_category():
         # Ask user which category they want to edit
         category_exists = False
         while not category_exists:
-            category_to_edit = input("Which category do you want to edit? ")
+            category_to_edit = input("\033[32mWhich category do you want to edit? \033[0m")
             # Find line number of category to edit
             f.seek(0)
             lines = f.readlines()
@@ -182,16 +182,16 @@ def edit_budget_category():
         # Ask user whether they want to change the category name or value.
         action = ""
         while action not in ["value", "name"]: 
-            action = input("Do you want to change the name or value of the category? ").lower()
+            action = input("\033[32mDo you want to change the name or value of the category? \033[0m").lower()
             if action not in ["value", "name"]:
                 print("\033[31mInvalid action. Please enter 'value' or 'name'.\033[0m")
         # If user wants to change the value, prompt for new value and update.
         if action == "value":
-            new_value = input("What is the new value for the category? ")
+            new_value = input("\033[32mWhat is the new value for the category? \033[0m")
             category_value = new_value
         # If user wants to change the name, prompt for new name and update.
         elif action == "name":
-            new_name = input("What is the new name for the category? ")
+            new_name = input("\033[32mWhat is the new name for the category? \033[0m")
             category_name = new_name
 
         # Make the new line for the category and update the list of lines in the file.
@@ -204,6 +204,22 @@ def edit_budget_category():
         f.truncate()
         print("\nCategory updated successfully.")
 
+
+def delete_budget_file():
+    """Delete an existing budget file."""
+    file_name = input("\n\033[32mWhat is the name of the budget file you want to delete? \033[0m")
+
+    if file_exists(file_name):
+        # Confirm with the user that they want to delete the file
+        confirm = input(f"\n\033[33mAre you sure you want to delete '{file_name}'? (y/n)\033[0m ")
+        if confirm.lower() == "y":
+            os.remove(file_name)
+            print(f"{file_name}' has been successfully deleted.")
+        else:
+            print(f"\n\033[33m'{file_name}' has not been deleted.\033[0m")
+    else:
+        print(f"\n\033[31m'{file_name}' does not exist.\033[0m")
+
       
 # Welcome Message
 print("\033[34mMonthly Budget Program\033[0m")
@@ -212,18 +228,21 @@ print("""
 Actions:
 Make a new budget (new)
 Edit an existing budget (edit)
+Delete an existing budget (delete)
 Quit the program (quit)
 """)
 
 # Ask users what they want to do
 while True:
-  user_action = input("\nPlease select an action: ").lower()
+  user_action = input("\n\033[32mPlease select an action: \033[0m").lower()
   # Make a new budget
   if user_action == "new":
     create_budget_file()
   # Edit an already existing budget
   elif user_action == "edit":
     edit_budget_category()
+  elif user_action == "delete":
+    delete_budget_file()
   # Quit the program
   elif user_action == "quit":
     # Goodbye message
