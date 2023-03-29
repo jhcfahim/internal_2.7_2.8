@@ -174,6 +174,7 @@ def edit_budget_category():
   with open(file_edit, "r+") as f:
     # Print current contents of file
     contents = f.read()
+    print("\n")
     print(contents)
     # Ask user which category they want to edit
     category_exists = False
