@@ -38,7 +38,6 @@ def is_valid_number(input_str):
     return input_str.isdigit() or ('.' in input_str and input_str.replace('.', '', 1).isdigit())
 
 
-
 def check_num(question):
   """Tell user if they have not entered a valid response."""
   # Loop until the user enteres a valid number
@@ -54,7 +53,7 @@ def check_num(question):
 
 def file_exists(file_name):
   """Check if the file exists, and return result."""
-  return os.path.isfile(file_name)
+  return os.path.exists(file_name)
 
 
 def create_budget_file():
@@ -110,7 +109,7 @@ def add_categories(income_after_tax, f):
   while income_after_tax > 0:
 
     # Ask users to add categories and budget
-    category = input("\n\033[32mAdd a category: \033[0m")
+    category = input("\n\033[32mAdd a category: \033[0m").lower()
 
     # Check if user wants to stop adding categories or needs help.
     if category == "stop":
@@ -151,6 +150,18 @@ Budget: 200
     f.write(f"{category}: {budget}\n\n")
 
 
+def view_budget():
+    while True:
+        filename = input("\033[32mPlease enter the name of the budget file you want to view: \033[0m")
+        try:
+            with open(filename, 'r') as f:
+                print("\n")
+                print(f.read())
+                break
+        except FileNotFoundError:
+            print("\033[31mThe file doesn't exist. Please try again.\033[0m")
+
+          
 def edit_budget_category():
   """Allow users to edit already existing budgets"""
   # Ask user for what file they want to change
@@ -230,27 +241,32 @@ def delete_budget_file():
   else:
     print(f"\n\033[31m'{file_name}' does not exist.\033[0m")
 
-
+     
 # Welcome Message
 print("\033[34mMonthly Budget Program\033[0m")
 print("""
 ----------------------\n
 Actions:
 Make a new budget (new)
+View an existing budget (view)
 Edit an existing budget (edit)
 Delete an existing budget (delete)
 Quit the program (quit)\n
 """)
 
-# Ask users what they want to do
+# Main Loop
 while True:
   user_action = input("\033[32mPlease select an action: \033[0m").lower()
   # Make a new budget
   if user_action == "new":
     create_budget_file()
+  # View an already existing budget
+  elif user_action == "view":
+    view_budget()
   # Edit an already existing budget
   elif user_action == "edit":
     edit_budget_category()
+  # Delete an already existing budget
   elif user_action == "delete":
     delete_budget_file()
   # Quit the program
